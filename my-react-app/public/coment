@@ -1,0 +1,12 @@
+public/
+ ├── services/
+ │   ├── pathology.png
+ │   ├── xray.png
+ │   ├── mri.png
+ │   ├── ct-scan.png
+ │   ├── doctor-consultation.png
+ │   ├── dialysis.png
+ │   ├── ecg.png
+ │   ├── ultrasound.png
+ │   ├── indoor-service.png
+ │   ├── facilities.png
