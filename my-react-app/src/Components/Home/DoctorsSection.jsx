@@ -107,11 +107,11 @@ const DoctorsSection = () => {
       if (!container) return;
 
       if (!isPaused && !isDragging) {
-        container.scrollLeft += 0.5;
+        container.scrollLeft -= 0.5;
 
         const halfWidth = container.scrollWidth / 2;
-        if (container.scrollLeft >= halfWidth) {
-          container.scrollLeft = 0;
+        if (container.scrollLeft <= 0) {
+          container.scrollLeft = halfWidth;
         }
       }
 
@@ -187,10 +187,14 @@ const DoctorsSection = () => {
           className={`doctor-scroll flex overflow-x-auto pb-5 ${
             isDragging ? "cursor-grabbing select-none" : "cursor-grab"
           }`}
+          onMouseEnter={() => setIsPaused(true)}
           onMouseDown={(e) => startDragging(e.pageX)}
           onMouseMove={(e) => onDragging(e.pageX)}
           onMouseUp={stopDragging}
-          onMouseLeave={stopDragging}
+          onMouseLeave={() => {
+            stopDragging();
+            setIsPaused(false);
+          }}
           onTouchStart={(e) => startDragging(e.touches[0].pageX)}
           onTouchMove={(e) => onDragging(e.touches[0].pageX)}
           onTouchEnd={stopDragging}
