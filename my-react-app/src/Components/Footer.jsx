@@ -83,6 +83,14 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
+                  <a
+                    href="/gallery"
+                    className="transition hover:text-[#015D67]"
+                  >
+                    গ্যালারি
+                  </a>
+                </li>
+                <li>
                   <a href="#" className="transition hover:text-[#015D67]">
                     যোগাযোগ
                   </a>
@@ -172,7 +180,10 @@ const Footer = () => {
                 </p>
 
                 <p>
-                  <a href="#" className="font-medium text-[#00ACB1] transition hover:text-[#015D67]">
+                  <a
+                    href="#"
+                    className="font-medium text-[#00ACB1] transition hover:text-[#015D67]"
+                  >
                     Google Map দেখুন
                   </a>
                 </p>
