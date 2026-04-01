@@ -123,7 +123,7 @@ const Navbar = () => {
           <ul className="hidden items-center gap-5 xl:flex">
             <li>
               <a
-                href="#"
+                href="/services"
                 className="text-sm font-semibold text-[#1F6C75] transition duration-300 hover:text-[#015D67]"
               >
                 সেবা

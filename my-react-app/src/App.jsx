@@ -15,10 +15,12 @@ import TermsConditions from "./Pages/TermsConditions";
 import FAQ from "./Pages/FAQ";
 import Support from "./Pages/Support";
 import About from "./Pages/About";
-import Services from "./Pages/Services";
+
 import Doctors from "./Pages/Doctors";
 import Contact from "./Pages/Contact";
+// import FacilitiesSection from "./Components/Home/FacilitiesSection.jsx";
 import "./index.css";
+import FacilitiesSection from "./Components/Home/FacilitiesSection.jsx";
 
 function App() {
   return (
@@ -37,6 +39,7 @@ function App() {
               <Stats />
               <Location />
               <Form />
+              {/* <FacilitiesSection /> */}
             </>
           }
         />
@@ -47,7 +50,7 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/support" element={<Support />} />
         <Route path="/about" element={<About />} />
-        <Route path="/services" element={<Services />} />
+        <Route path="/services" element={<FacilitiesSection />} />
         <Route path="/doctors" element={<Doctors />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
