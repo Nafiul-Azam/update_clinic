@@ -31,27 +31,36 @@ const colors = {
   surface: "#F5F9F9",
 };
 
-const Custom3DBar = (props) => {
-  const { x, y, width, height } = props;
+const statsCards = [
+  {
+    title: "পেশেন্ট ভর্তি",
+    value: "৫৮৭",
+    change: "-০.১%",
+    direction: "down",
+  },
+  {
+    title: "সফল অপারেশন",
+    value: "৪৬",
+    change: "+০.১%",
+    direction: "up",
+  },
+  {
+    title: "টেস্ট সংখ্যা",
+    value: "২২২",
+    change: "+২৬৬.৭%",
+    direction: "up",
+  },
+];
 
-  const depthX = 10;
-  const depthY = 8;
+const Custom3DBar = ({ x, y, width, height }) => {
+  const depthX = 8;
+  const depthY = 6;
 
   if (height <= 0) return null;
 
   return (
     <g>
-      {/* front */}
-      <rect
-        x={x}
-        y={y}
-        width={width}
-        height={height}
-        rx={0}
-        fill={colors.front}
-      />
-
-      {/* right side */}
+      <rect x={x} y={y} width={width} height={height} fill={colors.front} />
       <path
         d={`
           M ${x + width} ${y}
@@ -61,10 +70,8 @@ const Custom3DBar = (props) => {
           Z
         `}
         fill={colors.side}
-        opacity={0.95}
+        opacity={0.94}
       />
-
-      {/* top */}
       <path
         d={`
           M ${x} ${y}
@@ -103,33 +110,30 @@ const Stats = () => {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setShow(true);
-        }
+        if (entry.isIntersecting) setShow(true);
       },
-      { threshold: 0.22 },
+      { threshold: 0.18 },
     );
 
     observer.observe(target);
-
     return () => observer.disconnect();
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#F8FAFC] py-16 sm:py-20"
+      className="relative overflow-hidden bg-[#F8FAFC] py-12 sm:py-14 lg:py-16"
     >
-      <div className="pointer-events-none absolute left-0 top-10 h-56 w-56 rounded-full bg-[#87E4DB]/20 blur-3xl"></div>
-      <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-[#CAF0C1]/20 blur-3xl"></div>
+      <div className="pointer-events-none absolute left-0 top-10 h-44 w-44 rounded-full bg-[#87E4DB]/20 blur-3xl"></div>
+      <div className="pointer-events-none absolute bottom-0 right-0 h-56 w-56 rounded-full bg-[#CAF0C1]/20 blur-3xl"></div>
 
       <div
         className={`mx-auto max-w-7xl px-4 transition-all duration-1000 sm:px-6 lg:px-8 ${
-          show ? "translate-y-0 opacity-100" : "translate-y-16 opacity-0"
+          show ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
         }`}
       >
-        <div className="rounded-[30px] border border-[#D5E4E6] bg-white p-6 shadow-[0_20px_60px_rgba(1,93,103,0.08)] sm:p-8 md:p-10">
-          <div className="mb-10">
+        <div className="rounded-[28px] border border-[#DCE9EA] bg-white p-4 shadow-[0_18px_50px_rgba(1,93,103,0.08)] sm:p-6 lg:p-8">
+          <div className="mb-6 sm:mb-8">
             <span className="inline-flex rounded-full border border-[#87E4DB]/50 bg-[#F5F9F9] px-4 py-1.5 text-[11px] font-semibold tracking-[0.16em] text-[#1F6C75] shadow-sm">
               CLINIC PROGRESS
             </span>
@@ -139,61 +143,73 @@ const Stats = () => {
             </h3>
 
             <p className="mt-3 max-w-2xl text-sm leading-7 text-[#47878E] sm:text-base">
-              প্রতিদিন কতজন রোগী ভর্তি হচ্ছেন, কতটি সফল অপারেশন সম্পন্ন হচ্ছে
-              এবং কতগুলো পরীক্ষা করা হচ্ছে — তার একটি সংক্ষিপ্ত অগ্রগতি চিত্র।
+              রোগী ভর্তি, সফল অপারেশন এবং পরীক্ষার সাম্প্রতিক অগ্রগতির সংক্ষিপ্ত
+              পরিসংখ্যান।
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-[24px] border border-[#D5E4E6] bg-[#F5F9F9] p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(1,93,103,0.10)]">
-              <p className="text-sm font-semibold text-[#47878E]">
-                পেশেন্ট ভর্তি আছে
-              </p>
-              <h4 className="mt-2 text-4xl font-bold text-[#015D67]">৫৮৭</h4>
-              <p className="mt-2 text-sm font-semibold text-[#E4572E]">
-                ↓ -০.১%
-              </p>
-            </div>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">
+            {statsCards.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-[22px] border border-[#D8E7E8] bg-gradient-to-br from-[#FBFEFE] to-[#F3F9F9] px-4 py-4 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(1,93,103,0.09)] sm:px-5"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-semibold text-[#47878E]">
+                      {item.title}
+                    </p>
+                    <h4 className="mt-1 text-2xl font-bold text-[#015D67] sm:text-3xl">
+                      {item.value}
+                    </h4>
+                  </div>
 
-            <div className="rounded-[24px] border border-[#D5E4E6] bg-[#F5F9F9] p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(1,93,103,0.10)]">
-              <p className="text-sm font-semibold text-[#47878E]">
-                সফল অপারেশন
-              </p>
-              <h4 className="mt-2 text-4xl font-bold text-[#015D67]">৪৬</h4>
-              <p className="mt-2 text-sm font-semibold text-[#169B62]">
-                ↑ +০.১%
-              </p>
-            </div>
+                  <div
+                    className={`inline-flex min-w-[78px] items-center justify-center rounded-full px-3 py-1.5 text-xs font-semibold ${
+                      item.direction === "up"
+                        ? "bg-[#EAF8F1] text-[#169B62]"
+                        : "bg-[#FFF3EF] text-[#E4572E]"
+                    }`}
+                  >
+                    {item.direction === "up" ? "↑" : "↓"} {item.change}
+                  </div>
+                </div>
 
-            <div className="rounded-[24px] border border-[#D5E4E6] bg-[#F5F9F9] p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(1,93,103,0.10)]">
-              <p className="text-sm font-semibold text-[#47878E]">
-                টেস্ট সংখ্যা
-              </p>
-              <h4 className="mt-2 text-4xl font-bold text-[#015D67]">২২২</h4>
-              <p className="mt-2 text-sm font-semibold text-[#169B62]">
-                ↑ +২৬৬.৭%
-              </p>
-            </div>
+                <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-[#EAF1F2]">
+                  <div
+                    className={`h-full rounded-full ${
+                      item.direction === "up" ? "bg-[#00ACB1]" : "bg-[#E4572E]"
+                    } ${
+                      item.title === "পেশেন্ট ভর্তি"
+                        ? "w-[46%]"
+                        : item.title === "সফল অপারেশন"
+                          ? "w-[68%]"
+                          : "w-[84%]"
+                    }`}
+                  ></div>
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div className="mt-12">
-            <div className="mb-5">
-              <h4 className="text-lg font-bold text-[#015D67]">
+          <div className="mt-8 sm:mt-10">
+            <div className="mb-4 sm:mb-5">
+              <h4 className="text-base font-bold text-[#015D67] sm:text-lg">
                 সেবা কার্যক্রমের 3D প্রবণতা চিত্র
               </h4>
               <p className="mt-1 text-sm text-[#47878E]">
-                ২৪ মার্চ থেকে ৫ এপ্রিল পর্যন্ত ক্লিনিকের অগ্রগতির 3D bar graph
+                ২৪ মার্চ থেকে ৫ এপ্রিল পর্যন্ত ক্লিনিকের অগ্রগতির bar graph
               </p>
             </div>
 
-            <div className="rounded-[24px] border border-[#E5EEEF] bg-[#FBFEFE] p-3 sm:p-5">
-              <div className="h-[300px] w-full sm:h-[360px]">
+            <div className="rounded-[24px] border border-[#E6EFF0] bg-[#FBFEFE] p-3 sm:p-4 lg:p-5">
+              <div className="h-[250px] w-full sm:h-[300px] lg:h-[340px]">
                 {show && (
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                       data={graphData}
-                      margin={{ top: 30, right: 28, left: 0, bottom: 10 }}
-                      barCategoryGap="18%"
+                      margin={{ top: 22, right: 18, left: -10, bottom: 0 }}
+                      barCategoryGap="20%"
                     >
                       <CartesianGrid
                         strokeDasharray="3 3"
@@ -205,7 +221,7 @@ const Stats = () => {
                         dataKey="date"
                         tick={{
                           fill: colors.text,
-                          fontSize: 12,
+                          fontSize: 11,
                           fontWeight: 600,
                         }}
                         axisLine={false}
@@ -215,12 +231,12 @@ const Stats = () => {
                       <YAxis
                         tick={{
                           fill: colors.subtext,
-                          fontSize: 12,
+                          fontSize: 11,
                           fontWeight: 600,
                         }}
                         axisLine={false}
                         tickLine={false}
-                        width={42}
+                        width={36}
                       />
 
                       <Tooltip content={<CustomTooltip />} cursor={false} />
@@ -228,9 +244,8 @@ const Stats = () => {
                       <Bar
                         dataKey="value"
                         shape={<Custom3DBar />}
-                        animationDuration={1600}
-                        animationBegin={150}
-                        radius={[0, 0, 0, 0]}
+                        animationDuration={1400}
+                        animationBegin={120}
                       >
                         {graphData.map((entry, index) => (
                           <Cell key={`cell-${index}`} />

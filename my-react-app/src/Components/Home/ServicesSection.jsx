@@ -55,11 +55,11 @@ const services = [
 
 const ServicesSection = () => {
   return (
-    <section className="bg-[#F8FAFC] py-16 sm:py-20">
+    <section className="bg-gradient-to-b from-[#F7FBFC] via-[#F8FAFC] to-[#EEF7F7] py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* heading */}
-        <div className="mb-12 text-center">
-          <span className="inline-flex rounded-full border border-[#87E4DB]/50 bg-[#F5F9F9] px-4 py-1.5 text-[11px] font-semibold tracking-[0.16em] text-[#1F6C75] shadow-sm">
+        <div className="mb-10 text-center sm:mb-12 lg:mb-14">
+          <span className="inline-flex rounded-full border border-[#87E4DB]/50 bg-white px-4 py-1.5 text-[11px] font-semibold tracking-[0.16em] text-[#1F6C75] shadow-sm sm:text-xs">
             OUR SERVICES
           </span>
 
@@ -67,9 +67,9 @@ const ServicesSection = () => {
             আমাদের সেবাসমূহ
           </h2>
 
-          <div className="mx-auto mt-4 h-[3px] w-28 rounded-full bg-gradient-to-r from-[#015D67] via-[#00ACB1] to-[#87E4DB]"></div>
+          <div className="mx-auto mt-4 h-[3px] w-24 rounded-full bg-gradient-to-r from-[#015D67] via-[#00ACB1] to-[#87E4DB] sm:w-28"></div>
 
-          <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-[#47878E] sm:text-base">
+          <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-[#4B7D83] sm:text-base">
             আধুনিক প্রযুক্তি, নির্ভরযোগ্য পরীক্ষা এবং রোগীকেন্দ্রিক সেবার
             মাধ্যমে আমরা প্রতিদিন আপনাদের জন্য নিশ্চিত করছি মানসম্মত
             স্বাস্থ্যসেবা।
@@ -77,38 +77,43 @@ const ServicesSection = () => {
         </div>
 
         {/* cards */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4 lg:gap-6">
           {services.map((service) => (
             <div
               key={service.id}
-              className="group overflow-hidden rounded-[24px] border border-[#D5E4E6] bg-white shadow-[0_18px_45px_rgba(1,93,103,0.08)] transition duration-500 hover:-translate-y-2 hover:shadow-[0_24px_55px_rgba(1,93,103,0.14)]"
+              className="group overflow-hidden rounded-[22px] border border-[#DDEBEC] bg-white shadow-[0_14px_35px_rgba(1,93,103,0.08)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_45px_rgba(1,93,103,0.14)]"
             >
               {/* image area */}
-              <div className="relative h-[210px] overflow-hidden bg-[#E5F5EF]">
+              <div className="relative h-[150px] overflow-hidden bg-[#EAF6F4] sm:h-[185px] lg:h-[210px]">
                 <img
                   src={service.image}
                   alt={service.title}
-                  className="h-full w-full object-cover blur-[1.5px] transition duration-500 group-hover:scale-105 group-hover:blur-0"
+                  className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
                 />
 
                 {/* overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#015D67]/70 via-[#015D67]/18 to-[#87E4DB]/10 transition duration-500 group-hover:from-[#015D67]/45"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#015D67]/55 via-[#015D67]/15 to-transparent"></div>
 
-                {/* title on image */}
-                <div className="absolute inset-0 flex items-center justify-center px-4 text-center">
-                  <h3 className="text-base font-semibold leading-6 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)] transition duration-300 group-hover:text-[17px] group-hover:font-bold sm:text-lg">
-                    {service.title}
-                  </h3>
+                {/* image glow */}
+                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#015D67]/30 to-transparent"></div>
+
+                {/* title */}
+                <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
+                  <div className="rounded-2xl border border-white/15 bg-white/10 px-3 py-2 backdrop-blur-[2px]">
+                    <h3 className="text-center text-sm font-semibold leading-5 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)] sm:text-base">
+                      {service.title}
+                    </h3>
+                  </div>
                 </div>
               </div>
 
               {/* bottom area */}
-              <div className="flex items-center justify-between border-t border-[#E5EEEF] bg-[#F5F9F9] px-4 py-4">
-                <p className="text-sm font-semibold text-[#1F6C75]">
+              <div className="flex items-center justify-between gap-2 border-t border-[#EAF0F1] bg-[#F9FCFC] px-3 py-3 sm:px-4 sm:py-4">
+                <p className="text-[11px] font-semibold text-[#1F6C75] sm:text-sm">
                   বিস্তারিত দেখুন
                 </p>
 
-                <button className="inline-flex items-center gap-2 rounded-full border border-[#BFD9DB] bg-white px-3.5 py-2 text-xs font-semibold text-[#015D67] shadow-sm transition duration-300 hover:border-[#015D67] hover:bg-[#015D67] hover:text-white">
+                <button className="inline-flex h-9 min-w-[64px] items-center justify-center rounded-full border border-[#C9DCDD] bg-white px-3 text-[11px] font-semibold text-[#015D67] shadow-sm transition duration-300 hover:border-[#015D67] hover:bg-[#015D67] hover:text-white sm:h-10 sm:px-4 sm:text-xs">
                   কল
                 </button>
               </div>
