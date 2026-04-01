@@ -83,7 +83,7 @@ const FormSection = () => {
 
             <div className="rounded-[28px] border border-white/50 bg-white/70 p-4 shadow-[0_16px_40px_rgba(1,93,103,0.08)] backdrop-blur-xl sm:p-5 lg:p-8">
               {/* user type selection */}
-              <div className="mb-6 rounded-[24px] border border-[#E4EFF0] bg-white/80 p-4 shadow-sm sm:mb-8 sm:p-5">
+              <div className="mb-6 rounded-[24px] p-4 sm:mb-8 sm:p-5">
                 <div className="mb-4 flex flex-col gap-1">
                   <h3 className="text-base font-bold text-[#015D67] sm:text-lg">
                     ব্যবহারকারীর ধরন নির্বাচন করুন
