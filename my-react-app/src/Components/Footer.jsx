@@ -58,22 +58,31 @@ const Footer = () => {
                   </h3>
                   <ul className="mt-4 space-y-2.5 text-[13px] text-[#47878E] sm:text-sm">
                     <li>
-                      <a href="#" className="transition hover:text-[#015D67]">
+                      <a href="/" className="transition hover:text-[#015D67]">
                         হোম
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="transition hover:text-[#015D67]">
+                      <a
+                        href="/about"
+                        className="transition hover:text-[#015D67]"
+                      >
                         আমাদের সম্পর্কে
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="transition hover:text-[#015D67]">
+                      <a
+                        href="/services"
+                        className="transition hover:text-[#015D67]"
+                      >
                         সেবাসমূহ
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="transition hover:text-[#015D67]">
+                      <a
+                        href="/doctors"
+                        className="transition hover:text-[#015D67]"
+                      >
                         ডাক্তারবৃন্দ
                       </a>
                     </li>
@@ -86,7 +95,10 @@ const Footer = () => {
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="transition hover:text-[#015D67]">
+                      <a
+                        href="/contact"
+                        className="transition hover:text-[#015D67]"
+                      >
                         যোগাযোগ
                       </a>
                     </li>
@@ -99,22 +111,34 @@ const Footer = () => {
                   </h3>
                   <ul className="mt-4 space-y-2.5 text-[13px] text-[#47878E] sm:text-sm">
                     <li>
-                      <a href="#" className="transition hover:text-[#015D67]">
+                      <a
+                        href="/privacy-policy"
+                        className="transition hover:text-[#015D67]"
+                      >
                         Privacy Policy
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="transition hover:text-[#015D67]">
+                      <a
+                        href="/terms-conditions"
+                        className="transition hover:text-[#015D67]"
+                      >
                         Terms & Conditions
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="transition hover:text-[#015D67]">
+                      <a
+                        href="/faq"
+                        className="transition hover:text-[#015D67]"
+                      >
                         FAQ
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="transition hover:text-[#015D67]">
+                      <a
+                        href="/support"
+                        className="transition hover:text-[#015D67]"
+                      >
                         Support
                       </a>
                     </li>
