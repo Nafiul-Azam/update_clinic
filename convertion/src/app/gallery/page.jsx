@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const logoPath = "/update.png";
@@ -33,26 +34,23 @@ const rows = [
   {
     id: "notice",
     title: "নোটিশ সেকশন",
-    subtitle: "গুরুত্বপূর্ণ আপডেট ও তথ্য",
     images: noticeImages,
     direction: "left",
-    autoStep: 2600,
+    autoStep: 2000,
   },
   {
     id: "doctor-nurse",
     title: "ডাক্তার ও নার্স সেকশন",
-    subtitle: "নিবেদিত সেবার মুহূর্ত",
     images: doctorNurseImages,
     direction: "right",
-    autoStep: 2600,
+    autoStep: 2000,
   },
   {
     id: "patient-service",
     title: "রোগী ও সেবা সেকশন",
-    subtitle: "যত্ন, সেবা ও আস্থার গল্প",
     images: patientServiceImages,
     direction: "left",
-    autoStep: 2600,
+    autoStep: 2000,
   },
 ];
 
@@ -71,182 +69,8 @@ const clampIndex = (index, total) => {
   return ((index % total) + total) % total;
 };
 
-const MobileCarousel = ({
+const CarouselRow = ({
   title,
-  subtitle,
-  images,
-  autoStep,
-  onOpenLightbox,
-}) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [dragOffset, setDragOffset] = useState(0);
-
-  const dragState = useRef({
-    isDown: false,
-    startX: 0,
-    moved: false,
-  });
-
-  const total = images.length;
-
-  useEffect(() => {
-    if (isPaused || total <= 1 || dragState.current.isDown) return;
-
-    const timer = setInterval(() => {
-      setActiveIndex((prev) => clampIndex(prev + 1, total));
-    }, autoStep);
-
-    return () => clearInterval(timer);
-  }, [isPaused, total, autoStep]);
-
-  const goPrev = () => {
-    setActiveIndex((prev) => clampIndex(prev - 1, total));
-  };
-
-  const goNext = () => {
-    setActiveIndex((prev) => clampIndex(prev + 1, total));
-  };
-
-  const handlePointerDown = (event) => {
-    dragState.current.isDown = true;
-    dragState.current.startX = getClientX(event);
-    dragState.current.moved = false;
-    setDragOffset(0);
-  };
-
-  const handlePointerMove = (event) => {
-    if (!dragState.current.isDown) return;
-    const diff = getClientX(event) - dragState.current.startX;
-
-    if (Math.abs(diff) > 5) {
-      dragState.current.moved = true;
-    }
-
-    setDragOffset(diff);
-  };
-
-  const handlePointerUp = () => {
-    if (!dragState.current.isDown) return;
-
-    const threshold = 70;
-
-    if (dragOffset <= -threshold) {
-      goNext();
-    } else if (dragOffset >= threshold) {
-      goPrev();
-    }
-
-    dragState.current.isDown = false;
-    setDragOffset(0);
-  };
-
-  const handleImageClick = () => {
-    if (dragState.current.moved) return;
-    onOpenLightbox(images, activeIndex, title);
-  };
-
-  return (
-    <section className="space-y-4 lg:hidden">
-      <div className="flex items-end justify-between gap-3">
-        <div>
-          <h2 className="text-base font-bold text-[#12414D]">{title}</h2>
-          <p className="mt-1 text-xs text-[#4C7981]">{subtitle}</p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={goPrev}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-[#8BC9D0]/50 bg-white/90 text-[#12414D] shadow-[0_10px_20px_rgba(18,65,77,0.08)] transition duration-300 active:scale-95"
-            aria-label={`${title} previous`}
-          >
-            ←
-          </button>
-
-          <button
-            type="button"
-            onClick={goNext}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-[#8BC9D0]/50 bg-white/90 text-[#12414D] shadow-[0_10px_20px_rgba(18,65,77,0.08)] transition duration-300 active:scale-95"
-            aria-label={`${title} next`}
-          >
-            →
-          </button>
-        </div>
-      </div>
-
-      <div
-        className="relative overflow-hidden rounded-[28px] border border-white/60 bg-white/65 p-3 shadow-[0_16px_45px_rgba(18,65,77,0.10)] backdrop-blur-2xl"
-        onTouchStart={handlePointerDown}
-        onTouchMove={handlePointerMove}
-        onTouchEnd={handlePointerUp}
-        onMouseDown={handlePointerDown}
-        onMouseMove={handlePointerMove}
-        onMouseUp={handlePointerUp}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => {
-          setIsPaused(false);
-          handlePointerUp();
-        }}
-      >
-        <button
-          type="button"
-          onClick={handleImageClick}
-          className="relative block w-full overflow-hidden rounded-[22px] text-left"
-          style={{
-            transform: `translateX(${dragOffset * 0.18}px) scale(${
-              dragState.current.isDown ? 0.985 : 1
-            })`,
-            transition: dragState.current.isDown
-              ? "none"
-              : "transform 700ms cubic-bezier(0.22,1,0.36,1)",
-          }}
-        >
-          <div className="relative h-[240px] w-full overflow-hidden rounded-[22px] bg-[#DDEFF1]">
-            <img
-              src={images[activeIndex]}
-              alt={title}
-              draggable="false"
-              className="h-full w-full object-cover object-center"
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-t from-[#082D34]/58 via-[#082D34]/14 to-transparent" />
-            <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/15 to-transparent" />
-
-            <div className="absolute bottom-0 left-0 right-0 p-4">
-              <div className="rounded-[18px] border border-white/20 bg-white/12 px-4 py-3 backdrop-blur-md">
-                <p className="text-sm font-semibold text-white">{title}</p>
-                <p className="mt-1 text-xs leading-5 text-white/80">
-                  {subtitle}
-                </p>
-              </div>
-            </div>
-          </div>
-        </button>
-
-        <div className="mt-4 flex items-center justify-center gap-2">
-          {images.map((_, index) => (
-            <button
-              key={`${title}-dot-${index}`}
-              type="button"
-              onClick={() => setActiveIndex(index)}
-              className={`rounded-full transition-all duration-500 ${
-                activeIndex === index
-                  ? "h-2.5 w-6 bg-[#12414D]"
-                  : "h-2.5 w-2.5 bg-[#A8CDD2]"
-              }`}
-              aria-label={`${title} image ${index + 1}`}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const DesktopCarousel = ({
-  title,
-  subtitle,
   images,
   direction = "left",
   autoStep = 2000,
@@ -345,17 +169,17 @@ const DesktopCarousel = ({
 
   const getCardStyles = (position) => {
     const baseClass =
-      "absolute left-1/2 top-1/2 overflow-hidden rounded-[32px] border border-white/60 bg-white/85 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform";
+      "absolute left-1/2 top-1/2 overflow-hidden rounded-[30px] border border-white/60 bg-white/85 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform";
 
     const translateX = dragOffset * 0.3;
 
     switch (position) {
       case -2:
         return {
-          className: `${baseClass} z-[6] hidden xl:block`,
+          className: `${baseClass} z-[6] hidden lg:block`,
           style: {
             transform: `translate3d(calc(-50% - 480px + ${translateX}px), -50%, -180px) scale(0.68) rotateY(28deg) rotateZ(-1deg)`,
-            opacity: 0.16,
+            opacity: 0.18,
             filter: "blur(1.5px)",
             boxShadow: "0 22px 40px rgba(18,65,77,0.10)",
           },
@@ -396,10 +220,10 @@ const DesktopCarousel = ({
 
       case 2:
         return {
-          className: `${baseClass} z-[6] hidden xl:block`,
+          className: `${baseClass} z-[6] hidden lg:block`,
           style: {
             transform: `translate3d(calc(-50% + 480px + ${translateX}px), -50%, -180px) scale(0.68) rotateY(-28deg) rotateZ(1deg)`,
-            opacity: 0.16,
+            opacity: 0.18,
             filter: "blur(1.5px)",
             boxShadow: "0 22px 40px rgba(18,65,77,0.10)",
           },
@@ -414,13 +238,12 @@ const DesktopCarousel = ({
   };
 
   return (
-    <section className="hidden space-y-5 lg:block">
+    <section className="space-y-5">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold tracking-wide text-[#12414D]">
+          <h2 className="text-base font-semibold tracking-wide text-[#12414D] sm:text-lg">
             {title}
           </h2>
-          <p className="mt-1 text-sm text-[#4C7981]">{subtitle}</p>
           <div className="mt-2 h-[2px] w-24 rounded-full bg-[#87E4DB]/80" />
         </div>
 
@@ -446,7 +269,7 @@ const DesktopCarousel = ({
       </div>
 
       <div
-        className="relative overflow-hidden rounded-[36px] border border-white/55 bg-white/45 px-6 py-10 shadow-[0_18px_60px_rgba(18,65,77,0.10)] backdrop-blur-xl xl:px-8"
+        className="relative overflow-hidden rounded-[36px] border border-white/55 bg-white/45 px-4 py-8 shadow-[0_18px_60px_rgba(18,65,77,0.10)] backdrop-blur-xl sm:px-6 sm:py-10 lg:px-8"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => {
           setIsHovered(false);
@@ -455,11 +278,14 @@ const DesktopCarousel = ({
         onMouseDown={handlePointerDown}
         onMouseMove={handlePointerMove}
         onMouseUp={handlePointerUp}
+        onTouchStart={handlePointerDown}
+        onTouchMove={handlePointerMove}
+        onTouchEnd={handlePointerUp}
       >
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-30 w-24 bg-gradient-to-r from-[#F4FBFC] via-[#F4FBFC]/80 to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-30 w-24 bg-gradient-to-l from-[#F4FBFC] via-[#F4FBFC]/80 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-30 w-16 bg-gradient-to-r from-[#F4FBFC] via-[#F4FBFC]/80 to-transparent sm:w-24" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-30 w-16 bg-gradient-to-l from-[#F4FBFC] via-[#F4FBFC]/80 to-transparent sm:w-24" />
 
-        <div className="relative h-[390px] [perspective:2200px] [transform-style:preserve-3d]">
+        <div className="relative h-[250px] sm:h-[320px] lg:h-[390px] [perspective:2200px] [transform-style:preserve-3d]">
           {visibleCards.map((card) => {
             const config = getCardStyles(card.position);
 
@@ -471,13 +297,14 @@ const DesktopCarousel = ({
                 className={`${config.className} group`}
                 style={config.style}
               >
-                <div className="relative h-[305px] w-[420px] overflow-hidden rounded-[32px]">
+                <div className="relative h-[185px] w-[220px] sm:h-[245px] sm:w-[310px] lg:h-[305px] lg:w-[420px] overflow-hidden rounded-[30px]">
                   <img
                     src={card.image}
                     alt={title}
                     draggable="false"
-                    className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.04]"
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
                   />
+
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#103943]/18 via-transparent to-white/5" />
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/10 to-transparent" />
                 </div>
@@ -628,13 +455,13 @@ const Gallery = () => {
 
         <div className="relative mx-auto max-w-7xl">
           <div className="overflow-hidden rounded-[36px] border border-white/55 bg-white/55 shadow-[0_22px_70px_rgba(18,65,77,0.14)] backdrop-blur-2xl">
-            <div className="px-4 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
+            <div className="px-5 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
               <div className="mx-auto max-w-3xl text-center">
                 <div className="mb-5 flex justify-center">
                   <img
                     src={logoPath}
                     alt="Update Diagnostic"
-                    className="h-16 w-auto object-contain sm:h-24 md:h-28"
+                    className="h-20 w-auto object-contain sm:h-24 md:h-28"
                   />
                 </div>
 
@@ -658,26 +485,16 @@ const Gallery = () => {
                 </p>
               </div>
 
-              <div className="mt-10 space-y-8 sm:space-y-12">
+              <div className="mt-10 space-y-10 sm:space-y-12">
                 {rows.map((row) => (
-                  <div key={row.id}>
-                    <MobileCarousel
-                      title={row.title}
-                      subtitle={row.subtitle}
-                      images={row.images}
-                      autoStep={row.autoStep}
-                      onOpenLightbox={openLightbox}
-                    />
-
-                    <DesktopCarousel
-                      title={row.title}
-                      subtitle={row.subtitle}
-                      images={row.images}
-                      direction={row.direction}
-                      autoStep={row.autoStep}
-                      onOpenLightbox={openLightbox}
-                    />
-                  </div>
+                  <CarouselRow
+                    key={row.id}
+                    title={row.title}
+                    images={row.images}
+                    direction={row.direction}
+                    autoStep={row.autoStep}
+                    onOpenLightbox={openLightbox}
+                  />
                 ))}
               </div>
             </div>

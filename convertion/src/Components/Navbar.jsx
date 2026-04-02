@@ -194,7 +194,7 @@ const Navbar = () => {
         >
           <div className="flex flex-col px-3">
             <a
-              href="/services"
+              href="#"
               className="rounded-xl px-4 py-3 text-sm font-semibold text-[#1F6C75] transition hover:bg-[#e7f7f5] hover:text-[#015D67]"
             >
               সেবা

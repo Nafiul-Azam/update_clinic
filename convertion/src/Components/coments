@@ -1,0 +1,45 @@
+src/
+│
+├── assets/
+│   ├── images/
+│   └── icons/
+│
+├── components/
+│   ├── layout/
+│   │   ├── Navbar.jsx
+│   │   ├── Footer.jsx
+│   │   └── Container.jsx
+│   │
+│   ├── common/
+│   │   ├── SectionTitle.jsx
+│   │   ├── PrimaryButton.jsx
+│   │   ├── SearchBar.jsx
+│   │   └── ServiceCard.jsx
+│   │
+│   ├── home/
+│   │   ├── HeroSection.jsx
+│   │   ├── QuickStats.jsx
+│   │   ├── ServicesSection.jsx
+│   │   ├── DoctorsSection.jsx
+│   │   ├── TodayDoctorsSection.jsx
+│   │   ├── FacilitiesSection.jsx
+│   │   ├── OffersSection.jsx
+│   │   ├── CheckupCalculatorSection.jsx
+│   │   ├── TestimonialsSection.jsx
+│   │   ├── FAQSection.jsx
+│   │   └── ContactSection.jsx
+│
+├── pages/
+│   └── Home.jsx
+│
+├── data/
+│   ├── doctorsData.js
+│   ├── servicesData.js
+│   ├── facilitiesData.js
+│   └── offersData.js
+│
+├── styles/
+│   └── global.css
+│
+├── App.jsx
+└── main.jsx
