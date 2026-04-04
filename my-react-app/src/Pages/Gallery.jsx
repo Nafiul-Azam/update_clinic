@@ -1,241 +1,122 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const logoPath = "/update.png";
-
-const noticeImages = [
-  "/Gallery/notice1.jpg",
-  "/Gallery/notice2.jpg",
-  "/Gallery/notice3.jpg",
-  "/Gallery/notice4.jpg",
-  "/Gallery/notice5.jpg",
-  "/Gallery/notice6.jpg",
-];
-
-const doctorNurseImages = [
-  "/Gallery/dn1.jpg",
-  "/Gallery/dn2.jpg",
-  "/Gallery/dn3.jpg",
-  "/Gallery/dn4.jpg",
-  "/Gallery/dn5.jpg",
-  "/Gallery/dn6.jpg",
-];
-
-const patientServiceImages = [
-  "/Gallery/pic1.jpg",
-  "/Gallery/pic2.jpg",
-  "/Gallery/pic3.jpg",
-  "/Gallery/pic4.jpg",
-  "/Gallery/pic5.jpg",
-  "/Gallery/pic6.jpg",
-];
 
 const rows = [
   {
     id: "notice",
     title: "নোটিশ সেকশন",
     subtitle: "গুরুত্বপূর্ণ আপডেট ও তথ্য",
-    images: noticeImages,
+    images: [
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/653017306_1428553695955912_1023563791847627044_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeHZt-fjN1wCXg_S86FTUZPTwkQG9RUHO07CRAb1FQc7TjfNvrs_xW_y6yx4jGJZqFFH7WA9Sh7Ryi5T9G1VgD7H&_nc_ohc=7IIYFEHb-j8Q7kNvwGL8IN0&_nc_oc=AdpfgCV7okyb8VKbPW8ydCzc-ACyirv-mBLx2G5QakUCVcE4_XTbDTge8CQFIFV9YZI&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=PSjzrqzwGs5dyAS6Ff0g7Q&_nc_ss=7a3a8&oh=00_Af05Xl5H_Ga_bE7X-M_gTXRJeOqMyVqWIUSWWLGSAZOXKQ&oe=69D6BBF5",
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/645254782_1413369300807685_1872779810163388905_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeFl3AJcmaBzCcOwUG3mGnYRlDo7g_qpDhiUOjuD-qkOGKcbSggW4NNjzPephYQefcXlDC6IUf2sBiO0bCzwbJyP&_nc_ohc=2-nhtEz7magQ7kNvwFhtfha&_nc_oc=Adqt1yl7yK2M-sWweMmlSWL9XR4fR6k2mtY0u-bi3Xuvs8QhRoZAH9qzDsyc8_yeJ8w&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=VgJS8-Y7ozmml0Vs2EyTsQ&_nc_ss=7a3a8&oh=00_Af3MXyZnrznDRlFJUNsUAkKai9THX_5rSXIBD2NdCgTjlQ&oe=69D6CA53",
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/615402423_1371407665003849_4343690346201095725_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeHMjroe9DPnzzR8gYpeKfWFN_Evyl-Z5yI38S_KX5nnIg3NFu_Blbydal6iRzHde83NFLJ3FnqYJleTBrTRmLBd&_nc_ohc=nbjIWMDFvP0Q7kNvwFQtTST&_nc_oc=AdpIQtloiviwbFpXYQPqUT2kWgt_1Zc-T9qkbfvQYdLVN_JlWsM9OntoYXec8_9giiI&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=H_3HjkfcfCN-0xv1QToaQw&_nc_ss=7a3a8&oh=00_Af3V7YumcYocJq0rzZUBjbU5b6-OpEklEZzVgdd4V12JRQ&oe=69D6B450",
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/607257779_1361402439337705_4126449706303817120_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeGPPumFA3OsWQf2uHopce53vS0Sv0PseAa9LRK_Q-x4BqGm8fATObKXjZJAUgO8uB9U7rK2r3XaxxcuDU2FDdKm&_nc_ohc=40AISkTaYC0Q7kNvwHr7816&_nc_oc=AdoZV4lGTFiwug73pfTN2QKmo34TRPiXKdKnkVT22Hq72iPTPUhtaA9ITcWmOPeCXSY&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=f4nRz5_0I8AYfu7maXIZmQ&_nc_ss=7a3a8&oh=00_Af1bR66tMNTzqSkzYvI1jnYjqeOm82zPr720BseeLUMy_w&oe=69D6BA8B",
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/605758117_1360486766095939_6618312288728107774_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeFsGAX8vj671ynOc4sZqVoFxvA2YpQqre3G8DZilCqt7UotHEhZYcd_RvKrOqB012P6xhmi2OUutLoViyhnbYpD&_nc_ohc=YwUZwLtPBgoQ7kNvwE_7dOe&_nc_oc=AdoCYwOg-bO-eSodnR8_RJc6G3FXfsLVTOgh7XRcov-zXSrHr6yyAbiyomEns5L0NW8&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=aUX9XD5w3cI5MdQxJzgGBA&_nc_ss=7a3a8&oh=00_Af35en--qHNVOfnr2Qk2gUv-LzNoavJ444Eh6xJz--byig&oe=69D6BCF8",
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/599552964_1348939577250658_2965882789259543902_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeHBWjycs409ax2tajmur_TTgL-CapKs2qyAv4JqkqzarFWsD7zIQx2UNu8PAZlRFa2JupOr5_au9Fb3GbHFyxdQ&_nc_ohc=Z6O54YBnqT8Q7kNvwHdudD3&_nc_oc=Adoi3sR1jmsHFm1f2QNzxXFygfphqmylkbeCu_F5yaoLFPsiC0e0AkdhmhC8LA-pSHQ&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=8R2UCg4MiIj6Ha4VN9afgQ&_nc_ss=7a3a8&oh=00_Af3Kr-TSNIsQvshI-_agP2uTNHJcKt39t74eCJ4xpcGI3A&oe=69D6BF9F",
+    ],
     direction: "left",
-    autoStep: 2600,
   },
   {
-    id: "doctor-nurse",
-    title: "ডাক্তার ও নার্স সেকশন",
+    id: "doctor",
+    title: "ডাক্তার ও নার্স",
     subtitle: "নিবেদিত সেবার মুহূর্ত",
-    images: doctorNurseImages,
+    images: [
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/651290211_1427886692689279_2337823765216653189_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeGIZzJQJVK7k8uhA29Z_Sjg3VNqCvUb_vrdU2oK9Rv--hqbtSJ6W-puqaWCH4ooYGOSjU-GkxaiLaBtzQebhR9d&_nc_ohc=X3A-zgBrOGwQ7kNvwHNZURr&_nc_oc=AdpWPFmH2uFmNkCCPBiLCco_i4Hy3L690k3k8GqypB8xfcCWCDaqMyHXcwbjmD_BhGs&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=KuyynEtGjfWfHZRGUs2D3g&_nc_ss=7a3a8&oh=00_Af21IHVcJgyg7ehAMc_uuGSXwKnF52JI-vhJHOrGfpMQFQ&oe=69D6D0FE",
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/653782384_1427886699355945_129790542255832971_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeH6luua6R30amwMj2v7_-531ensCkbDBTLV6ewKRsMFMmFKwyEcOhIV4caRMbID_08J7tZzP93ORUXoBI22YlOd&_nc_ohc=7X3FVJIYdr0Q7kNvwFFWlbP&_nc_oc=AdoLqOrsIyCJLPLydKIVnPNjYfc6fXIcIm8PQr5l_9An_4L_SFXAuoURoJVzQkaT2-c&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=uwl1_Ia7DWFwVWbRZorPiQ&_nc_ss=7a3a8&oh=00_Af3I6sIpdb8sO-qqKZbOU4MHpAk828tnJ0zk0rxNyjuGNw&oe=69D6B187",
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/653809812_1427886649355950_4070428514469276080_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeGFivZVW_9IG1T76vOa-jsU1cVo78GJq0PVxWjvwYmrQ84sxLVXpwbxFHbPNAwemQgFAv-KU_JqQy0WbXBtk-Tq&_nc_ohc=TsWbip_nbegQ7kNvwH310JH&_nc_oc=AdoCiZ1RSedD23esDa7hahg094lEQk1h7nIEnA0I9gD00c7DeJfDpRqUx5o03zWsyvw&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=CcwXV_M-V0sWcK4JLzDJLA&_nc_ss=7a3a8&oh=00_Af2UNXkyzoWJ1F-FTaklQeyxvuMggqwkRaUfS7YZmPiI9Q&oe=69D6B8D8",
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/629229079_1393480466129902_7069613858889986885_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeH93eEiFF4FOoVT5dkLgTWdDd_PFHXc3XQN388UddzddAjW3DSxDXaHnmk9FdMy5w2PulDrlIiS3pMR2mko01Hq&_nc_ohc=LfUJiT3iFmIQ7kNvwHSTmpv&_nc_oc=AdqUPSSmjX2OmD5O36lHMgoZXRxybXYzWLGPVzesvKWeDOQzmbMLmR_6ugO41Hw-0rw&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=Ry1BDnjYLhtlzYceLU78-w&_nc_ss=7a3a8&oh=00_Af1vejIvunmAfVfw40VGor1CC4EIMHDQ5Vhzd_3TJC6CJA&oe=69D6CB68",
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/651290211_1427886692689279_2337823765216653189_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeGIZzJQJVK7k8uhA29Z_Sjg3VNqCvUb_vrdU2oK9Rv--hqbtSJ6W-puqaWCH4ooYGOSjU-GkxaiLaBtzQebhR9d&_nc_ohc=X3A-zgBrOGwQ7kNvwHNZURr&_nc_oc=AdpWPFmH2uFmNkCCPBiLCco_i4Hy3L690k3k8GqypB8xfcCWCDaqMyHXcwbjmD_BhGs&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=KuyynEtGjfWfHZRGUs2D3g&_nc_ss=7a3a8&oh=00_Af21IHVcJgyg7ehAMc_uuGSXwKnF52JI-vhJHOrGfpMQFQ&oe=69D6D0FE",
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/653782384_1427886699355945_129790542255832971_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeH6luua6R30amwMj2v7_-531ensCkbDBTLV6ewKRsMFMmFKwyEcOhIV4caRMbID_08J7tZzP93ORUXoBI22YlOd&_nc_ohc=7X3FVJIYdr0Q7kNvwFFWlbP&_nc_oc=AdoLqOrsIyCJLPLydKIVnPNjYfc6fXIcIm8PQr5l_9An_4L_SFXAuoURoJVzQkaT2-c&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=uwl1_Ia7DWFwVWbRZorPiQ&_nc_ss=7a3a8&oh=00_Af3I6sIpdb8sO-qqKZbOU4MHpAk828tnJ0zk0rxNyjuGNw&oe=69D6B187",
+    ],
     direction: "right",
-    autoStep: 2600,
   },
   {
-    id: "patient-service",
-    title: "রোগী ও সেবা সেকশন",
-    subtitle: "যত্ন, সেবা ও আস্থার গল্প",
-    images: patientServiceImages,
+    id: "patient",
+    title: "রোগী ও সেবা",
+    subtitle: "যত্ন ও আস্থার গল্প",
+    images: [
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/588763089_1332325698912046_4219794662402558324_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeEsCEDcaE8bavdx4vQEBii0kqaqJlOLkpmSpqomU4uSmXrea68qaeYfrQCQq_s3RzB_wdjOQ9iSeKIcw4dkw6Gx&_nc_ohc=68_Lvc9u1D8Q7kNvwHXeOhO&_nc_oc=AdqoryZYaszPDMGBADsN5ox6NyGhPBdGC1JprrwmsECUmFMqOm5nj9SgRVF9RHFDW3s&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=LKlq_ArrzP7YqzLUB0UNMA&_nc_ss=7a3a8&oh=00_Af249ZeAfe3iiShpxT8NNgw-1pSpsQqymID6hGwTeaHBhA&oe=69D6B54A",
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/589016376_1334792985331984_545564789109604382_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeGElTVTkf2EqhFLcrDJopDoLgPT24tixTguA9Pbi2LFOOfnjqkqseUGj7K_vLlOhgzYQq_4z7siZbiRKlRmyNS6&_nc_ohc=gp5oH-5cvDsQ7kNvwHeDWiW&_nc_oc=Adr33ndHiwNbsRCiu26SyWfdUpKKpCnj15bG-nE0_II5Oz32ZQV9lxHN8d2bKzuXJQo&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=VjbONa0J9kxYvu0Y0nG59Q&_nc_ss=7a3a8&oh=00_Af2ZS7K_IRGLBHAB7iWk49yAuqdp-Q0cfLa7z5ib-RxvOQ&oe=69D6D689",
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/590804703_1334739185337364_3942260463651185725_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeHADSz5kCD1Ljm4HmkX0o0Y44LaNiKgyZPjgto2IqDJk3irrunxaEMFNwO8Vqeb-_zDvDGmuR3yZ6jpNWPr_Ggn&_nc_ohc=ECBeVQxGlj4Q7kNvwG0IkaF&_nc_oc=Adrd47D3k64WcYqFSDGj7ePOgdKfBVx7yfrti_dM8epfoZo6_HB70-dEiDvlWjJnxVc&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=NPh-oMe-T7_gQ94lHRgDtA&_nc_ss=7a3a8&oh=00_Af3h9Sfc3kxfd_HFnFuoQdX6nOekY5f6jd55MbIQ-LrUSg&oe=69D6CA29",
+      "/Gallery/pic4.jpg",
+      "/Gallery/pic5.jpg",
+      "/Gallery/pic6.jpg",
+    ],
     direction: "left",
-    autoStep: 2600,
   },
 ];
 
-const getClientX = (event) => {
-  if ("touches" in event && event.touches.length > 0) {
-    return event.touches[0].clientX;
-  }
-  if ("changedTouches" in event && event.changedTouches.length > 0) {
-    return event.changedTouches[0].clientX;
-  }
-  return event.clientX;
-};
+const clamp = (i, total) => (i + total) % total;
 
-const clampIndex = (index, total) => {
-  if (total <= 0) return 0;
-  return ((index % total) + total) % total;
-};
-
-const MobileCarousel = ({
-  title,
-  subtitle,
-  images,
-  autoStep,
-  onOpenLightbox,
-}) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [dragOffset, setDragOffset] = useState(0);
-
-  const dragState = useRef({
-    isDown: false,
-    startX: 0,
-    moved: false,
-  });
-
+const Slider = ({ title, subtitle, images, direction, onOpen }) => {
+  const [index, setIndex] = useState(0);
   const total = images.length;
 
+  const next = () =>
+    setIndex((i) =>
+      direction === "left" ? clamp(i + 1, total) : clamp(i - 1, total),
+    );
+
+  const prev = () =>
+    setIndex((i) =>
+      direction === "left" ? clamp(i - 1, total) : clamp(i + 1, total),
+    );
+
   useEffect(() => {
-    if (isPaused || total <= 1 || dragState.current.isDown) return;
-
-    const timer = setInterval(() => {
-      setActiveIndex((prev) => clampIndex(prev + 1, total));
-    }, autoStep);
-
-    return () => clearInterval(timer);
-  }, [isPaused, total, autoStep]);
-
-  const goPrev = () => {
-    setActiveIndex((prev) => clampIndex(prev - 1, total));
-  };
-
-  const goNext = () => {
-    setActiveIndex((prev) => clampIndex(prev + 1, total));
-  };
-
-  const handlePointerDown = (event) => {
-    dragState.current.isDown = true;
-    dragState.current.startX = getClientX(event);
-    dragState.current.moved = false;
-    setDragOffset(0);
-  };
-
-  const handlePointerMove = (event) => {
-    if (!dragState.current.isDown) return;
-    const diff = getClientX(event) - dragState.current.startX;
-
-    if (Math.abs(diff) > 5) {
-      dragState.current.moved = true;
-    }
-
-    setDragOffset(diff);
-  };
-
-  const handlePointerUp = () => {
-    if (!dragState.current.isDown) return;
-
-    const threshold = 70;
-
-    if (dragOffset <= -threshold) {
-      goNext();
-    } else if (dragOffset >= threshold) {
-      goPrev();
-    }
-
-    dragState.current.isDown = false;
-    setDragOffset(0);
-  };
-
-  const handleImageClick = () => {
-    if (dragState.current.moved) return;
-    onOpenLightbox(images, activeIndex, title);
-  };
+    const interval = setInterval(next, 4200);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <section className="space-y-4 lg:hidden">
-      <div className="flex items-end justify-between gap-3">
+    <section className="space-y-5">
+      {/* Header */}
+      <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-base font-bold text-[#12414D]">{title}</h2>
-          <p className="mt-1 text-xs text-[#4C7981]">{subtitle}</p>
+          <h2 className="text-lg font-semibold text-[#12414D]">{title}</h2>
+          <p className="text-sm text-[#4C7981]">{subtitle}</p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={goPrev}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-[#8BC9D0]/50 bg-white/90 text-[#12414D] shadow-[0_10px_20px_rgba(18,65,77,0.08)] transition duration-300 active:scale-95"
-            aria-label={`${title} previous`}
-          >
+        <div className="flex gap-2">
+          <button onClick={prev} className="btn">
             ←
           </button>
-
-          <button
-            type="button"
-            onClick={goNext}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-[#8BC9D0]/50 bg-white/90 text-[#12414D] shadow-[0_10px_20px_rgba(18,65,77,0.08)] transition duration-300 active:scale-95"
-            aria-label={`${title} next`}
-          >
+          <button onClick={next} className="btn">
             →
           </button>
         </div>
       </div>
 
-      <div
-        className="relative overflow-hidden rounded-[28px] border border-white/60 bg-white/65 p-3 shadow-[0_16px_45px_rgba(18,65,77,0.10)] backdrop-blur-2xl"
-        onTouchStart={handlePointerDown}
-        onTouchMove={handlePointerMove}
-        onTouchEnd={handlePointerUp}
-        onMouseDown={handlePointerDown}
-        onMouseMove={handlePointerMove}
-        onMouseUp={handlePointerUp}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => {
-          setIsPaused(false);
-          handlePointerUp();
-        }}
-      >
-        <button
-          type="button"
-          onClick={handleImageClick}
-          className="relative block w-full overflow-hidden rounded-[22px] text-left"
-          style={{
-            transform: `translateX(${dragOffset * 0.18}px) scale(${
-              dragState.current.isDown ? 0.985 : 1
-            })`,
-            transition: dragState.current.isDown
-              ? "none"
-              : "transform 700ms cubic-bezier(0.22,1,0.36,1)",
-          }}
-        >
-          <div className="relative h-[240px] w-full overflow-hidden rounded-[22px] bg-[#DDEFF1]">
-            <img
-              src={images[activeIndex]}
-              alt={title}
-              draggable="false"
-              className="h-full w-full object-cover object-center"
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-t from-[#082D34]/58 via-[#082D34]/14 to-transparent" />
-            <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/15 to-transparent" />
-
-            <div className="absolute bottom-0 left-0 right-0 p-4">
-              <div className="rounded-[18px] border border-white/20 bg-white/12 px-4 py-3 backdrop-blur-md">
-                <p className="text-sm font-semibold text-white">{title}</p>
-                <p className="mt-1 text-xs leading-5 text-white/80">
-                  {subtitle}
-                </p>
-              </div>
+      {/* 🔥 Desktop Grid */}
+      <div className="hidden lg:grid grid-cols-3 gap-6">
+        {images.map((img, i) => (
+          <div
+            key={i}
+            onClick={() => onOpen(images, i, title)}
+            className="group cursor-pointer rounded-[24px] overflow-hidden bg-white shadow-lg transition duration-500 hover:-translate-y-2 hover:shadow-[0_25px_60px_rgba(0,0,0,0.15)]"
+          >
+            <div className="overflow-hidden">
+              <img
+                src={img}
+                className="h-[240px] w-full object-cover transition duration-700 group-hover:scale-110"
+              />
             </div>
           </div>
-        </button>
+        ))}
+      </div>
 
-        <div className="mt-4 flex items-center justify-center gap-2">
-          {images.map((_, index) => (
-            <button
-              key={`${title}-dot-${index}`}
-              type="button"
-              onClick={() => setActiveIndex(index)}
-              className={`rounded-full transition-all duration-500 ${
-                activeIndex === index
-                  ? "h-2.5 w-6 bg-[#12414D]"
-                  : "h-2.5 w-2.5 bg-[#A8CDD2]"
-              }`}
-              aria-label={`${title} image ${index + 1}`}
+      {/* 📱 Mobile Slider */}
+      <div className="lg:hidden overflow-hidden rounded-[24px] bg-white shadow">
+        <div
+          className="flex transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          style={{ transform: `translateX(-${index * 100}%)` }}
+        >
+          {images.map((img, i) => (
+            <img
+              key={i}
+              src={img}
+              onClick={() => onOpen(images, i, title)}
+              className="min-w-full h-[240px] object-cover"
             />
           ))}
         </div>
@@ -244,335 +125,53 @@ const MobileCarousel = ({
   );
 };
 
-const DesktopCarousel = ({
-  title,
-  subtitle,
-  images,
-  direction = "left",
-  autoStep = 2000,
-  onOpenLightbox,
-}) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const [dragOffset, setDragOffset] = useState(0);
-
-  const autoRef = useRef(null);
-  const dragState = useRef({
-    isDown: false,
-    startX: 0,
-    moved: false,
-  });
-
-  const total = images.length;
-
-  const goPrev = () => {
-    setActiveIndex((prev) => clampIndex(prev - 1, total));
-  };
-
-  const goNext = () => {
-    setActiveIndex((prev) => clampIndex(prev + 1, total));
-  };
+const Lightbox = ({ data, onClose, onNext, onPrev }) => {
+  const { images, index } = data;
 
   useEffect(() => {
-    if (isHovered || dragState.current.isDown || total <= 1) return;
-
-    autoRef.current = setInterval(() => {
-      setActiveIndex((prev) =>
-        clampIndex(direction === "left" ? prev + 1 : prev - 1, total),
-      );
-    }, autoStep);
-
-    return () => clearInterval(autoRef.current);
-  }, [isHovered, direction, total, autoStep]);
-
-  const handlePointerDown = (event) => {
-    dragState.current.isDown = true;
-    dragState.current.startX = getClientX(event);
-    dragState.current.moved = false;
-    setDragOffset(0);
-  };
-
-  const handlePointerMove = (event) => {
-    if (!dragState.current.isDown) return;
-
-    const currentX = getClientX(event);
-    const diff = currentX - dragState.current.startX;
-
-    if (Math.abs(diff) > 5) {
-      dragState.current.moved = true;
-    }
-
-    setDragOffset(diff);
-  };
-
-  const handlePointerUp = () => {
-    if (!dragState.current.isDown) return;
-
-    const threshold = 80;
-
-    if (dragOffset <= -threshold) {
-      goNext();
-    } else if (dragOffset >= threshold) {
-      goPrev();
-    }
-
-    dragState.current.isDown = false;
-    setDragOffset(0);
-  };
-
-  const handleCardClick = (index) => {
-    if (dragState.current.moved) return;
-    onOpenLightbox(images, index, title);
-  };
-
-  const visibleCards = useMemo(() => {
-    if (!images.length) return [];
-
-    const prev2 = clampIndex(activeIndex - 2, total);
-    const prev1 = clampIndex(activeIndex - 1, total);
-    const current = clampIndex(activeIndex, total);
-    const next1 = clampIndex(activeIndex + 1, total);
-    const next2 = clampIndex(activeIndex + 2, total);
-
-    return [
-      { image: images[prev2], index: prev2, position: -2 },
-      { image: images[prev1], index: prev1, position: -1 },
-      { image: images[current], index: current, position: 0 },
-      { image: images[next1], index: next1, position: 1 },
-      { image: images[next2], index: next2, position: 2 },
-    ];
-  }, [activeIndex, images, total]);
-
-  const getCardStyles = (position) => {
-    const baseClass =
-      "absolute left-1/2 top-1/2 overflow-hidden rounded-[32px] border border-white/60 bg-white/85 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform";
-
-    const translateX = dragOffset * 0.3;
-
-    switch (position) {
-      case -2:
-        return {
-          className: `${baseClass} z-[6] hidden xl:block`,
-          style: {
-            transform: `translate3d(calc(-50% - 480px + ${translateX}px), -50%, -180px) scale(0.68) rotateY(28deg) rotateZ(-1deg)`,
-            opacity: 0.16,
-            filter: "blur(1.5px)",
-            boxShadow: "0 22px 40px rgba(18,65,77,0.10)",
-          },
-        };
-
-      case -1:
-        return {
-          className: `${baseClass} z-[12]`,
-          style: {
-            transform: `translate3d(calc(-50% - 270px + ${translateX}px), -50%, -80px) scale(0.86) rotateY(18deg)`,
-            opacity: 0.62,
-            filter: "blur(0.4px)",
-            boxShadow: "0 28px 55px rgba(18,65,77,0.16)",
-          },
-        };
-
-      case 0:
-        return {
-          className: `${baseClass} z-[20]`,
-          style: {
-            transform: `translate3d(calc(-50% + ${translateX}px), -50%, 0) scale(1.05) rotateY(0deg)`,
-            opacity: 1,
-            filter: "blur(0px)",
-            boxShadow: "0 35px 90px rgba(18,65,77,0.22)",
-          },
-        };
-
-      case 1:
-        return {
-          className: `${baseClass} z-[12]`,
-          style: {
-            transform: `translate3d(calc(-50% + 270px + ${translateX}px), -50%, -80px) scale(0.86) rotateY(-18deg)`,
-            opacity: 0.62,
-            filter: "blur(0.4px)",
-            boxShadow: "0 28px 55px rgba(18,65,77,0.16)",
-          },
-        };
-
-      case 2:
-        return {
-          className: `${baseClass} z-[6] hidden xl:block`,
-          style: {
-            transform: `translate3d(calc(-50% + 480px + ${translateX}px), -50%, -180px) scale(0.68) rotateY(-28deg) rotateZ(1deg)`,
-            opacity: 0.16,
-            filter: "blur(1.5px)",
-            boxShadow: "0 22px 40px rgba(18,65,77,0.10)",
-          },
-        };
-
-      default:
-        return {
-          className: `${baseClass} hidden`,
-          style: {},
-        };
-    }
-  };
-
-  return (
-    <section className="hidden space-y-5 lg:block">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <h2 className="text-lg font-semibold tracking-wide text-[#12414D]">
-            {title}
-          </h2>
-          <p className="mt-1 text-sm text-[#4C7981]">{subtitle}</p>
-          <div className="mt-2 h-[2px] w-24 rounded-full bg-[#87E4DB]/80" />
-        </div>
-
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={goPrev}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#8BC9D0]/60 bg-white/85 text-lg text-[#12414D] shadow-[0_8px_20px_rgba(18,65,77,0.10)] transition duration-300 hover:-translate-y-0.5 hover:bg-white"
-            aria-label={`${title} previous`}
-          >
-            ←
-          </button>
-
-          <button
-            type="button"
-            onClick={goNext}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#8BC9D0]/60 bg-white/85 text-lg text-[#12414D] shadow-[0_8px_20px_rgba(18,65,77,0.10)] transition duration-300 hover:-translate-y-0.5 hover:bg-white"
-            aria-label={`${title} next`}
-          >
-            →
-          </button>
-        </div>
-      </div>
-
-      <div
-        className="relative overflow-hidden rounded-[36px] border border-white/55 bg-white/45 px-6 py-10 shadow-[0_18px_60px_rgba(18,65,77,0.10)] backdrop-blur-xl xl:px-8"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => {
-          setIsHovered(false);
-          handlePointerUp();
-        }}
-        onMouseDown={handlePointerDown}
-        onMouseMove={handlePointerMove}
-        onMouseUp={handlePointerUp}
-      >
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-30 w-24 bg-gradient-to-r from-[#F4FBFC] via-[#F4FBFC]/80 to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-30 w-24 bg-gradient-to-l from-[#F4FBFC] via-[#F4FBFC]/80 to-transparent" />
-
-        <div className="relative h-[390px] [perspective:2200px] [transform-style:preserve-3d]">
-          {visibleCards.map((card) => {
-            const config = getCardStyles(card.position);
-
-            return (
-              <button
-                key={`${card.image}-${card.index}-${card.position}`}
-                type="button"
-                onClick={() => handleCardClick(card.index)}
-                className={`${config.className} group`}
-                style={config.style}
-              >
-                <div className="relative h-[305px] w-[420px] overflow-hidden rounded-[32px]">
-                  <img
-                    src={card.image}
-                    alt={title}
-                    draggable="false"
-                    className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.04]"
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#103943]/18 via-transparent to-white/5" />
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/10 to-transparent" />
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const Lightbox = ({
-  gallery,
-  currentIndex,
-  title,
-  onClose,
-  onPrev,
-  onNext,
-}) => {
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") onClose();
-      if (event.key === "ArrowLeft") onPrev();
-      if (event.key === "ArrowRight") onNext();
+    const key = (e) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") onNext();
+      if (e.key === "ArrowLeft") onPrev();
     };
-
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", key);
     document.body.style.overflow = "hidden";
-
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keydown", key);
       document.body.style.overflow = "";
     };
-  }, [onClose, onPrev, onNext]);
-
-  if (!gallery.length) return null;
+  }, []);
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#081519]/88 p-4 backdrop-blur-md"
+      className="fixed inset-0 bg-black/70 backdrop-blur flex items-center justify-center z-50"
       onClick={onClose}
     >
-      <button
-        type="button"
-        onClick={onClose}
-        className="absolute right-4 top-4 z-[110] flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-2xl font-semibold text-white transition duration-300 hover:bg-white/20 sm:right-6 sm:top-6"
-        aria-label="Close lightbox"
-      >
-        ×
-      </button>
+      <button className="absolute top-5 right-5 text-white text-3xl">✕</button>
+
+      <img
+        src={images[index]}
+        className="max-h-[90vh] max-w-[90vw] rounded-xl"
+      />
 
       <button
-        type="button"
+        className="absolute left-5 text-white text-3xl"
         onClick={(e) => {
           e.stopPropagation();
           onPrev();
         }}
-        className="absolute left-3 top-1/2 z-[110] flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-xl text-white transition duration-300 hover:bg-white/20 sm:left-6"
-        aria-label="Previous image"
       >
         ←
       </button>
-
       <button
-        type="button"
+        className="absolute right-5 text-white text-3xl"
         onClick={(e) => {
           e.stopPropagation();
           onNext();
         }}
-        className="absolute right-3 top-1/2 z-[110] flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-xl text-white transition duration-300 hover:bg-white/20 sm:right-6"
-        aria-label="Next image"
       >
         →
       </button>
-
-      <div
-        className="relative max-h-[92vh] w-full max-w-6xl overflow-hidden rounded-[28px] border border-white/15 bg-white/5 shadow-[0_30px_80px_rgba(0,0,0,0.35)]"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <img
-          src={gallery[currentIndex]}
-          alt={title}
-          className="max-h-[92vh] w-full object-contain"
-        />
-
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#061014]/80 via-[#061014]/30 to-transparent px-5 pb-5 pt-10 sm:px-8 sm:pb-7">
-          <p className="text-sm font-medium tracking-wide text-white/80 sm:text-base">
-            {title}
-          </p>
-          <p className="mt-1 text-xs text-white/70 sm:text-sm">
-            {currentIndex + 1} / {gallery.length}
-          </p>
-        </div>
-      </div>
     </div>
   );
 };
@@ -580,120 +179,50 @@ const Lightbox = ({
 const Gallery = () => {
   const [lightbox, setLightbox] = useState({
     open: false,
-    title: "",
     images: [],
-    currentIndex: 0,
+    index: 0,
   });
 
-  const openLightbox = (images, index, title) => {
-    setLightbox({
-      open: true,
-      images,
-      currentIndex: index,
-      title,
-    });
-  };
+  const open = (images, index) => setLightbox({ open: true, images, index });
 
-  const closeLightbox = () => {
-    setLightbox({
-      open: false,
-      title: "",
-      images: [],
-      currentIndex: 0,
-    });
-  };
+  const close = () => setLightbox({ open: false, images: [], index: 0 });
 
-  const handlePrevLightbox = () => {
-    setLightbox((prev) => ({
-      ...prev,
-      currentIndex: clampIndex(prev.currentIndex - 1, prev.images.length),
+  const next = () =>
+    setLightbox((p) => ({
+      ...p,
+      index: (p.index + 1) % p.images.length,
     }));
-  };
 
-  const handleNextLightbox = () => {
-    setLightbox((prev) => ({
-      ...prev,
-      currentIndex: clampIndex(prev.currentIndex + 1, prev.images.length),
+  const prev = () =>
+    setLightbox((p) => ({
+      ...p,
+      index: (p.index - 1 + p.images.length) % p.images.length,
     }));
-  };
 
   return (
     <>
-      <div className="relative min-h-screen overflow-hidden bg-[linear-gradient(135deg,#F4FBFC_0%,#EAF8F9_45%,#DFF3F5_100%)] px-4 py-8 sm:px-6 lg:px-8">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-[-60px] top-10 h-64 w-64 rounded-full bg-[#87E4DB]/25 blur-3xl" />
-          <div className="absolute right-[-40px] top-0 h-72 w-72 rounded-full bg-[#6CC9D6]/20 blur-3xl" />
-          <div className="absolute bottom-10 left-1/3 h-60 w-60 rounded-full bg-[#9EDAE2]/20 blur-3xl" />
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-[#F4FBFC] to-[#E6F7F8] px-4 py-6">
+        <div className="max-w-6xl mx-auto bg-white/80 backdrop-blur-xl rounded-[32px] shadow-xl p-6 sm:p-10">
+          <div className="text-center mb-10">
+            <img src={logoPath} className="h-16 mx-auto mb-4" />
+            <h1 className="text-3xl font-bold text-[#12414D]">
+              আমাদের সেবার দৃশ্যপট
+            </h1>
+            <p className="text-[#4C7981] mt-2">
+              সেবা, যত্ন এবং আস্থার প্রতিচ্ছবি
+            </p>
+          </div>
 
-        <div className="relative mx-auto max-w-7xl">
-          <div className="overflow-hidden rounded-[36px] border border-white/55 bg-white/55 shadow-[0_22px_70px_rgba(18,65,77,0.14)] backdrop-blur-2xl">
-            <div className="px-4 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
-              <div className="mx-auto max-w-3xl text-center">
-                <div className="mb-5 flex justify-center">
-                  <img
-                    src={logoPath}
-                    alt="Update Diagnostic"
-                    className="h-16 w-auto object-contain sm:h-24 md:h-28"
-                  />
-                </div>
-
-                <span className="inline-flex rounded-full border border-[#8BC9D0]/60 bg-white/80 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#12414D] shadow-sm">
-                  Gallery Section
-                </span>
-
-                <h1 className="mt-5 text-2xl font-bold leading-tight text-[#12414D] sm:text-3xl md:text-4xl">
-                  আমাদের সেবার দৃশ্যপট
-                </h1>
-
-                <h2 className="mx-auto mt-3 max-w-2xl text-sm font-medium leading-7 text-[#35606B] sm:text-base md:text-lg">
-                  প্রতিটি ছবির পেছনে রয়েছে সেবা, আস্থা, যত্ন এবং সুস্থতার গল্প
-                </h2>
-
-                <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#4C7981] sm:text-base">
-                  আমাদের ক্লিনিকের নোটিশ, ডাক্তার ও নার্সদের নিবেদিত মুহূর্ত,
-                  রোগী সেবা এবং চিকিৎসা যাত্রার বাস্তব দৃশ্যগুলো এখানে সাজানো
-                  আছে যত্নের সাথে—যেখানে প্রতিটি ফ্রেম আমাদের দায়িত্ব, আন্তরিকতা
-                  এবং মানবিক সেবার পরিচয় বহন করে।
-                </p>
-              </div>
-
-              <div className="mt-10 space-y-8 sm:space-y-12">
-                {rows.map((row) => (
-                  <div key={row.id}>
-                    <MobileCarousel
-                      title={row.title}
-                      subtitle={row.subtitle}
-                      images={row.images}
-                      autoStep={row.autoStep}
-                      onOpenLightbox={openLightbox}
-                    />
-
-                    <DesktopCarousel
-                      title={row.title}
-                      subtitle={row.subtitle}
-                      images={row.images}
-                      direction={row.direction}
-                      autoStep={row.autoStep}
-                      onOpenLightbox={openLightbox}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="space-y-12">
+            {rows.map((row) => (
+              <Slider key={row.id} {...row} onOpen={open} />
+            ))}
           </div>
         </div>
       </div>
 
       {lightbox.open && (
-        <Lightbox
-          gallery={lightbox.images}
-          currentIndex={lightbox.currentIndex}
-          title={lightbox.title}
-          onClose={closeLightbox}
-          onPrev={handlePrevLightbox}
-          onNext={handleNextLightbox}
-        />
+        <Lightbox data={lightbox} onClose={close} onNext={next} onPrev={prev} />
       )}
     </>
   );
