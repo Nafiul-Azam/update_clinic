@@ -251,66 +251,68 @@ const Contact = () => {
 
             <form className="mt-6 space-y-4">
               <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className="mb-2 block text-sm font-semibold text-[#015D67]">
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-[#015D67]">
                     আপনার নাম
                   </label>
+
                   <input
                     type="text"
                     placeholder="পূর্ণ নাম লিখুন"
-                    className="h-12 w-full rounded-2xl border border-white/70 bg-white/70 px-4 text-sm text-[#12414D] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition focus:border-[#00ACB1] focus:bg-white"
+                    className="h-12 w-full rounded-xl border border-[#d6e4e6] bg-white px-4 text-sm text-[#12414D] placeholder:text-gray-400 shadow-sm outline-none transition-all duration-200 focus:border-[#00ACB1] focus:ring-2 focus:ring-[#00ACB1]/30 focus:shadow-md"
                   />
                 </div>
 
-                <div>
-                  <label className="mb-2 block text-sm font-semibold text-[#015D67]">
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-[#015D67]">
                     মোবাইল নম্বর
                   </label>
+
                   <input
-                    type="text"
+                    type="tel"
                     placeholder="আপনার মোবাইল নম্বর"
-                    className="h-12 w-full rounded-2xl border border-white/70 bg-white/70 px-4 text-sm text-[#12414D] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition focus:border-[#00ACB1] focus:bg-white"
+                    className="h-12 w-full rounded-xl border border-[#d6e4e6] bg-white px-4 text-sm text-[#12414D] placeholder:text-gray-400 shadow-sm outline-none transition-all duration-200 focus:border-[#00ACB1] focus:ring-2 focus:ring-[#00ACB1]/30 focus:shadow-md"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-semibold text-[#015D67]">
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-[#015D67]">
                   ইমেইল
                 </label>
+
                 <input
                   type="email"
                   placeholder="আপনার ইমেইল লিখুন"
-                  className="h-12 w-full rounded-2xl border border-white/70 bg-white/70 px-4 text-sm text-[#12414D] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition focus:border-[#00ACB1] focus:bg-white"
+                  className="h-12 w-full rounded-xl border border-[#d6e4e6] bg-white px-4 text-sm text-[#12414D] placeholder:text-gray-400 shadow-sm outline-none transition-all duration-300 hover:border-[#b9dfe2] focus:border-[#00ACB1] focus:ring-2 focus:ring-[#00ACB1]/30 focus:shadow-lg"
                 />
               </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-semibold text-[#015D67]">
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-[#015D67]">
                   বিষয়
                 </label>
+
                 <input
                   type="text"
                   placeholder="কি বিষয়ে যোগাযোগ করতে চান"
-                  className="h-12 w-full rounded-2xl border border-white/70 bg-white/70 px-4 text-sm text-[#12414D] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition focus:border-[#00ACB1] focus:bg-white"
+                  className="h-12 w-full rounded-xl border border-[#d6e4e6] bg-white px-4 text-sm text-[#12414D] placeholder:text-gray-400 shadow-sm outline-none transition-all duration-300 hover:border-[#b9dfe2] focus:border-[#00ACB1] focus:ring-2 focus:ring-[#00ACB1]/30 focus:shadow-md"
                 />
               </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-semibold text-[#015D67]">
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-[#015D67]">
                   বার্তা
                 </label>
-                <textarea
-                  rows="5"
+
+                <input
+                  type="text"
                   placeholder="আপনার বার্তা লিখুন..."
-                  className="w-full rounded-2xl border border-white/70 bg-white/70 px-4 py-3 text-sm text-[#12414D] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition focus:border-[#00ACB1] focus:bg-white"
-                ></textarea>
+                  className="h-12 w-full rounded-xl border border-[#d6e4e6] bg-white px-4 text-sm text-[#12414D] placeholder:text-gray-400 shadow-sm outline-none transition-all duration-300 hover:border-[#b9dfe2] focus:border-[#00ACB1] focus:ring-2 focus:ring-[#00ACB1]/30 focus:shadow-md"
+                />
               </div>
 
-              <button
-                type="submit"
-                className="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#00ACB1] px-6 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(0,172,177,0.24)] transition duration-300 hover:bg-[#015D67] sm:w-auto sm:min-w-[190px]"
-              >
+              <button className="mt-4 w-full rounded-xl bg-[#00ACB1] py-3 text-white font-semibold shadow-md transition hover:bg-[#01979c]">
                 বার্তা পাঠান
               </button>
             </form>
