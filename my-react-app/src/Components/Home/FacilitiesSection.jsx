@@ -329,8 +329,6 @@ const FacilitiesSection = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#062E34]/78 via-[#062E34]/26 to-transparent" />
                     <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white/12 to-transparent" />
 
-                    
-
                     <div className="absolute inset-x-3 bottom-3">
                       <div className="rounded-[18px] border border-white/15 bg-white/10 px-3.5 py-3 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]">
                         <h4 className="line-clamp-2 text-[12px] font-bold leading-5 text-white sm:text-[13px] lg:text-[14px]">
@@ -397,17 +395,21 @@ const FacilitiesSection = () => {
             </div>
           </div>
 
-          <div className="mt-6 flex justify-center sm:mt-7">
+          <div className="mt-3 flex justify-center sm:mt-4">
             <div className="relative w-full max-w-2xl">
+              {/* Outer glow */}
               <div className="absolute -inset-[1px] rounded-[22px] bg-gradient-to-r from-white/60 via-[#87E4DB]/25 to-white/55 blur-sm" />
-              <div className="absolute inset-0 rounded-[22px] border border-white/40 bg-white/20 shadow-[0_16px_40px_rgba(9,53,61,0.10)] backdrop-blur-2xl" />
+              <div className="absolute inset-0 rounded-[22px] border border-white/40 bg-white/20 shadow-[0_12px_30px_rgba(9,53,61,0.08)] backdrop-blur-2xl" />
               <div className="absolute inset-[1px] rounded-[21px] bg-gradient-to-br from-white/35 via-white/18 to-white/8" />
 
-              <div className="relative flex items-center gap-2.5 px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/35 bg-white/35 text-[#015D67] shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] backdrop-blur-xl sm:h-10 sm:w-10">
-                  <SearchIcon className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
+              {/* Input row */}
+              <div className="relative flex items-center gap-2 px-2.5 py-2 sm:gap-2.5 sm:px-3 sm:py-2.5">
+                {/* Search icon */}
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/35 bg-white/35 text-[#015D67] shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] backdrop-blur-xl sm:h-9 sm:w-9">
+                  <SearchIcon className="h-4 w-4 sm:h-[16px] sm:w-[16px]" />
                 </div>
 
+                {/* Input field */}
                 <input
                   type="text"
                   placeholder="ডাক্তার, বিভাগ বা সমস্যার নাম লিখুন..."
@@ -416,10 +418,11 @@ const FacilitiesSection = () => {
                   className="w-full bg-transparent text-[13px] font-medium text-[#0B4B53] placeholder:text-[#6B9DA3] outline-none sm:text-sm"
                 />
 
+                {/* Clear button */}
                 {searchTerm && (
                   <button
                     onClick={() => setSearchTerm("")}
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/30 text-[#015D67] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] transition duration-300 hover:bg-white/50"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/30 text-[#015D67] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] transition duration-300 hover:bg-white/50 sm:h-9 sm:w-9"
                   >
                     <CloseIcon className="h-4 w-4" />
                   </button>

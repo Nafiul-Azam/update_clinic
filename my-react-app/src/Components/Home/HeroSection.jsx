@@ -24,7 +24,7 @@ const heroCards = [
     subtitle:
       "অনলাইনে সিরিয়াল, স্বল্প সময়ে রিপোর্ট এবং ২৪/৭ পাশে থাকার প্রতিশ্রুতি",
     image:
-      "https://images.unsplash.com/photo-1516549655669-df8a8f4f2f5d?auto=format&fit=crop&w=1200&q=80",
+      "https://ontimehealthcare.com/wp-content/uploads/2025/02/Hospital-Interior-Designer.jpg", // Updated image reference for healthcare service illustration
     badge: "Service & Care",
   },
 ];

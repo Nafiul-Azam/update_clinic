@@ -4,7 +4,7 @@ const services = [
   {
     id: 1,
     title: "MRI",
-    image: "/mri.png",
+    image: "/MRI.png",
   },
   {
     id: 2,
@@ -34,22 +34,26 @@ const services = [
   {
     id: 7,
     title: "ইনডোর সেবা",
-    image: "/indoor-service.png",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQacIiNQlB9IcGB1ZTuNGDvm6gkdn4PIe1VWQ&s",
   },
   {
-    id: 8,
-    title: "সুবিধাসমূহ",
-    image: "/facilities.png",
+    id: 10,
+    title: "CT-Scan",
+    image:
+      "https://cdn-prod.medicalnewstoday.com/content/images/articles/153/153201/ct-scan.jpg",
   },
+
   {
     id: 9,
     title: "ডাক্তার পরামর্শ",
     image: "/doctor-consultation.png",
   },
   {
-    id: 10,
-    title: "CT-Scan",
-    image: "/ct-scan.png",
+    id: 8,
+    title: "সুবিধাসমূহ",
+    image:
+      "https://scontent.fspd6-1.fna.fbcdn.net/v/t39.30808-6/486311419_1121878079956810_2947821809962537653_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeE71svsU96zbIiwPbTTiOAWs9GWyWSrO92z0ZbJZKs73eRL4-kw3q8Hg-HW0cOG9RZ215YM60Y-XgCBlcKynsSp&_nc_ohc=Qjw8SrKRn7wQ7kNvwGilNa9&_nc_oc=AdoolNyV2-vN44_xuZ6ifA_4CMoaN2dc1CM7EJ8kmkEu065cBRYUd8bZBbiGkrh7XwA&_nc_zt=23&_nc_ht=scontent.fspd6-1.fna&_nc_gid=AM3oVSQQU1fU9ZyXXJBR_Q&_nc_ss=7a3a8&oh=00_Af0dY1Z7ozipGXZtCQ4Bj64hg89AcfSwXJ2UO320-L9mjA&oe=69D6A53E",
   },
 ];
 
