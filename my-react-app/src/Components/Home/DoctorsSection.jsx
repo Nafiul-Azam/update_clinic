@@ -145,8 +145,9 @@ const DoctorsSection = () => {
   return (
     <section className="bg-[#F8FAFC] py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 flex items-end justify-between gap-4">
-          <div>
+        <div className="mb-10 flex flex-col items-center text-center sm:items-start sm:text-left md:flex-row md:items-end md:justify-between gap-6">
+          {/* LEFT CONTENT */}
+          <div className="max-w-2xl">
             <span className="inline-flex rounded-full border border-[#87E4DB]/40 bg-white/80 px-4 py-1.5 text-[11px] font-semibold tracking-[0.16em] text-[#1F6C75] shadow-sm">
               EXPERT DOCTORS
             </span>
@@ -155,13 +156,14 @@ const DoctorsSection = () => {
               আজকে ডাক্তার বসেছেন
             </h2>
 
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-[#47878E] sm:text-base">
+            <p className="mt-3 text-sm leading-7 text-[#47878E] sm:text-base">
               অভিজ্ঞ ও বিশ্বস্ত চিকিৎসকদের প্রোফাইল, যোগ্যতা এবং সময়সূচি সহজেই
               দেখুন।
             </p>
           </div>
 
-          <div className="hidden items-center gap-3 md:flex">
+          {/* RIGHT BUTTONS (DESKTOP ONLY) */}
+          <div className="hidden md:flex items-center gap-3">
             <button
               onClick={() => scrollByAmount(-320)}
               className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#D6E9E7] bg-white text-xl font-semibold text-[#015D67] shadow-[0_10px_30px_rgba(1,93,103,0.08)] transition hover:-translate-y-1 hover:bg-[#F5F9F9]"
@@ -173,11 +175,7 @@ const DoctorsSection = () => {
               onClick={() => scrollByAmount(320)}
               className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#D6E9E7] bg-white shadow-[0_10px_30px_rgba(1,93,103,0.08)] transition hover:-translate-y-1 hover:bg-[#F5F9F9]"
             >
-              <img
-                src="/right.png"
-                alt="আরও দেখুন"
-                className="h-5 w-5 object-contain"
-              />
+              <img src="/right.png" className="h-5 w-5" />
             </button>
           </div>
         </div>

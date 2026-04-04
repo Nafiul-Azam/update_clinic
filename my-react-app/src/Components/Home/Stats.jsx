@@ -133,8 +133,8 @@ const Stats = () => {
         }`}
       >
         <div className="rounded-[28px] border border-[#DCE9EA] bg-white p-4 shadow-[0_18px_50px_rgba(1,93,103,0.08)] sm:p-6 lg:p-8">
-          <div className="mb-6 sm:mb-8">
-            <span className="inline-flex rounded-full border border-[#87E4DB]/50 bg-[#F5F9F9] px-4 py-1.5 text-[11px] font-semibold tracking-[0.16em] text-[#1F6C75] shadow-sm">
+          <div className="mb-6 sm:mb-8 text-center sm:text-left">
+            <span className="inline-flex rounded-full border border-[#87E4DB]/50 bg-[#F5F9F9] px-4 py-1.5 text-[11px] font-semibold tracking-[0.16em] text-[#1F6C75] shadow-sm mx-auto sm:mx-0">
               CLINIC PROGRESS
             </span>
 
@@ -142,7 +142,7 @@ const Stats = () => {
               আমাদের সেবার অগ্রগতি
             </h3>
 
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-[#47878E] sm:text-base">
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-[#47878E] sm:text-base mx-auto sm:mx-0">
               রোগী ভর্তি, সফল অপারেশন এবং পরীক্ষার সাম্প্রতিক অগ্রগতির সংক্ষিপ্ত
               পরিসংখ্যান।
             </p>
