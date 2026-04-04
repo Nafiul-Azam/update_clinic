@@ -3,8 +3,12 @@ import { IoSearchSharp } from "react-icons/io5";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isPhoneDevice, setIsPhoneDevice] = useState(false);
+
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
+
+  const phoneNumber = "+8801234567890"; // এখানে তোমার আসল নাম্বার দাও
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -26,6 +30,38 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+
+    const updateDeviceType = () => {
+      setIsPhoneDevice(mediaQuery.matches);
+    };
+
+    updateDeviceType();
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", updateDeviceType);
+    } else {
+      mediaQuery.addListener(updateDeviceType);
+    }
+
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener("change", updateDeviceType);
+      } else {
+        mediaQuery.removeListener(updateDeviceType);
+      }
+    };
+  }, []);
+
+  const handleSerialButtonClick = () => {
+    if (isPhoneDevice) {
+      window.location.href = `tel:${phoneNumber}`;
+    } else {
+      window.location.href = "/contact";
+    }
+  };
 
   return (
     <>
@@ -107,7 +143,6 @@ const Navbar = () => {
                 type="button"
                 className="
                   flex h-10 w-11 shrink-0 items-center justify-center
-                   border-[#c7dddf]
                   bg-white/20 transition-all duration-300
                   hover:bg-[#d8f3f0]
                   active:scale-[0.97]
@@ -131,7 +166,7 @@ const Navbar = () => {
             </li>
             <li>
               <a
-                href="#"
+                href="/doctors"
                 className="text-sm font-semibold text-[#1F6C75] transition duration-300 hover:text-[#015D67]"
               >
                 ডাক্তার খুঁজুন
@@ -142,13 +177,17 @@ const Navbar = () => {
           {/* Right side actions */}
           <div className="flex shrink-0 items-center gap-2">
             {/* Desktop CTA */}
-            <button className="hidden rounded-xl bg-[#00ACB1] px-4 py-2.5 text-sm font-semibold text-white shadow-md transition duration-300 hover:bg-[#015D67] lg:inline-flex">
-              যোগাযোগ করুন
+            <button
+              type="button"
+              onClick={handleSerialButtonClick}
+              className="hidden rounded-xl bg-[#00ACB1] px-4 py-2.5 text-sm font-semibold text-white shadow-md transition duration-300 hover:bg-[#015D67] lg:inline-flex"
+            >
+              সিরিয়ালের জন্য
             </button>
 
             {/* Call button */}
             <a
-              href="tel:+8801234567890"
+              href={`tel:${phoneNumber}`}
               className="
                 flex h-10 w-10 items-center justify-center rounded-2xl
                 border border-white/40 bg-white/35 shadow-sm backdrop-blur-md
@@ -201,21 +240,22 @@ const Navbar = () => {
             </a>
 
             <a
-              href="#"
+              href="/doctors"
               className="rounded-xl px-4 py-3 text-sm font-semibold text-[#1F6C75] transition hover:bg-[#e7f7f5] hover:text-[#015D67]"
             >
               ডাক্তার খুঁজুন
             </a>
 
-            <a
-              href="#"
-              className="rounded-xl px-4 py-3 text-sm font-semibold text-[#1F6C75] transition hover:bg-[#e7f7f5] hover:text-[#015D67]"
+            <button
+              type="button"
+              onClick={handleSerialButtonClick}
+              className="rounded-xl px-4 py-3 text-left text-sm font-semibold text-[#1F6C75] transition hover:bg-[#e7f7f5] hover:text-[#015D67]"
             >
-              যোগাযোগ করুন
-            </a>
+              সিরিয়ালের জন্য
+            </button>
 
             <a
-              href="tel:+8801234567890"
+              href={`tel:${phoneNumber}`}
               className="mt-2 flex items-center justify-center rounded-xl bg-[#00ACB1] px-4 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#015D67]"
             >
               এখনই কল করুন
