@@ -1,0 +1,10 @@
+{
+  "name": "update-clinic-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd convertion && npm run dev",
+    "dev:react": "cd my-react-app && npm run dev",
+    "install-all": "npm install && cd convertion && npm install && cd ../my-react-app && npm install"
+  }
+}
